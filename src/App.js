@@ -29,13 +29,17 @@ function getTitle(title) {
 }
 
 function App() {
+  const handleChange = (event) => {
+    console.log(event.target.value);
+  };
+
   return (
     <div>
       <h1>
         {welcome.greeting} {getTitle(welcome.title)}
       </h1>
       <label htmlFor="">Search:</label>
-      <input id="search" type="text" />
+      <input id="search" type="text" onChange={handleChange} />
       <hr />
       <List />
     </div>
