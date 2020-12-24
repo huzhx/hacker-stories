@@ -52,14 +52,17 @@ function App() {
 
   const [stories, setStories] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
     setIsLoading(true);
 
-    getAsyncStories().then((result) => {
-      setStories(result.data.stories);
-      setIsLoading(false);
-    });
+    getAsyncStories()
+      .then((result) => {
+        setStories(result.data.stories);
+        setIsLoading(false);
+      })
+      .catch(() => setHasError(true));
   }, []);
 
   const handleRemoveStory = (item) => {
@@ -78,6 +81,7 @@ function App() {
         <strong>Search:</strong>
       </InputWithLabel>
       <hr />
+      {hasError && <p>Something went wrong...</p>}
       {isLoading ? <p>Loading...</p> : <List list={searchedStories} onRemoveItem={handleRemoveStory} />}
     </div>
   );
