@@ -62,11 +62,9 @@ function App() {
 
   const [stories, dispatchStories] = React.useReducer(storiesReducer, { data: [], isLoading: false, isError: false });
 
-  React.useEffect(() => {
-    if (searchTerm === '') return;
-
+  const handleFetchStories = React.useCallback(() => {
+    if (!searchTerm) return;
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
-
     fetch(`${API_ENDPOINT}${searchTerm}`)
       .then((response) => response.json())
       .then((result) => {
@@ -77,6 +75,10 @@ function App() {
       })
       .catch(() => dispatchStories({ type: 'STORIES_FETCH_FAILURE' }));
   }, [searchTerm]);
+
+  React.useEffect(() => {
+    handleFetchStories();
+  }, [handleFetchStories]);
 
   const handleRemoveStory = (item) => {
     dispatchStories({
