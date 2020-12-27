@@ -95,12 +95,11 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>
+    <div className="container">
+      <h1 className="headline-primary">
         {welcome.greeting} {getTitle(welcome.title)}
       </h1>
       <SearchForm searchTerm={searchTerm} onSearchInput={handleSearchInput} onSearchSubmit={handleSearchSubmit} />
-      <hr />
       {stories.isError && <p>Something went wrong...</p>}
       {stories.isLoading ? <p>Loading...</p> : <List list={stories.data} onRemoveItem={handleRemoveStory} />}
     </div>
